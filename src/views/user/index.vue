@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { fetchList, createUser, updateUser, filterList } from '@/api/users'
+import { fetchList, createUser, updateUser, filterList, deleteUser } from '@/api/users'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -231,7 +231,6 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -242,10 +241,9 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          tempData.schemaId = 'default'
           updateUser(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
@@ -258,13 +256,15 @@ export default {
       })
     },
     handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+      deleteUser(row.id).then(() => {
+        this.list.splice(index, 1)
+        this.$notify({
+          title: 'Success',
+          message: 'Delete Successfully',
+          type: 'success',
+          duration: 2000
+        })
       })
-      this.list.splice(index, 1)
     },
     formatJson(filterVal) {
       return this.list.map(v => filterVal.map(j => {

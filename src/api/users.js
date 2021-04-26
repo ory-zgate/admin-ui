@@ -24,10 +24,17 @@ export function createUser(data) {
   })
 }
 
-export function updateUser(params) {
+export function updateUser(data) {
   return request({
-    url: '/vue-admin-template/users/update',
-    method: 'get',
-    params
+    url: `/api/identity/${data.id}`,
+    method: 'put',
+    data
+  })
+}
+
+export function deleteUser(id) {
+  return request({
+    url: `/api/identity/${id}`,
+    method: 'delete'
   })
 }
