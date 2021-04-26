@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { fetchList, createUser, updateUser, filterList, deleteUser } from '@/api/users'
+import { createUser, updateUser, filterList, deleteUser } from '@/api/users'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -166,9 +166,8 @@ export default {
       })
     },
     cleanListQuery() {
-      let cleanedListQuery = lodash.cloneDeep(this.listQuery)
-      cleanedListQuery.query.fields = cleanedListQuery.query.fields
-                                        .filter(f => f.param !== null).filter(f => f.param !== '')
+      const cleanedListQuery = lodash.cloneDeep(this.listQuery)
+      cleanedListQuery.query.fields = cleanedListQuery.query.fields.filter(f => f.param !== null).filter(f => f.param !== '')
       return cleanedListQuery
     },
     handleFilter() {
