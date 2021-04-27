@@ -24,7 +24,8 @@
     "vue": "2.6.10",
     "vue-router": "3.0.6",
     "vuex": "3.1.0",
-    "vue-moment": "4.1.0"
+    "vue-moment": "4.1.0",
+    "@ory/kratos-client": "0.0.0-next.b7b69098fd89"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.4.4",
