@@ -22,11 +22,19 @@ router.beforeEach(async(to, from, next) => {
   // determine whether the user has logged in
   const hasToken = getToken()
   const baseUrl = window.location.origin
+  
+  // await store.dispatch('user/getInfo')
 
   checkSessionValid().then(({data: info}) => {
-    next();
+    try {
+      console.log(info)
+      
+      next()
+    } catch (error) {
+      console.log(error)
+    }
   }).catch(error => {
-    window.location.href = `${config.login.url}?return_to=${baseUrl}`
+    window.location.href = `${config.url.login}?return_to=${baseUrl}`
   })
 
 

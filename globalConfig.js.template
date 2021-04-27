@@ -1,1 +1,2 @@
 var LOGIN_URL="${LOGIN_URL}";
+var LOGOUT_URL="${LOGOUT_URL}";

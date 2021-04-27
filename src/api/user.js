@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { checkSessionValid } from "@/api/kratos";
 
 export function login(data) {
   return request({
@@ -8,12 +9,8 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
-  return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
-  })
+export function getInfo() {
+  return checkSessionValid()
 }
 
 export function logout() {
