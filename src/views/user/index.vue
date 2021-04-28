@@ -163,6 +163,8 @@ export default {
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 100)
+      }).catch(() => {
+        this.listLoading = false
       })
     },
     cleanListQuery() {
