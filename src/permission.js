@@ -21,7 +21,7 @@ router.beforeEach(async(to, from, next) => {
 
   // determine whether the user has logged in
   const hasToken = getToken()
-  const baseUrl = window.location.origin
+  const baseUrl = window.location.href
   
   // await store.dispatch('user/getInfo')
 
