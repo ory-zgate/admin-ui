@@ -66,11 +66,14 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Username" prop="username">
+        <el-form-item label="用户名" prop="username">
           <el-input v-model="temp.traits.username" />
         </el-form-item>
-        <el-form-item label="DisplayName" prop="displayName">
+        <el-form-item label="用户昵称" prop="displayName">
           <el-input v-model="temp.traits.displayName" />
+        </el-form-item>
+        <el-form-item label="角色" prop="roleType">
+          <el-input v-model="temp.traits.roleType" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -130,14 +133,16 @@ export default {
       temp: {
         schemaId: 'default',
         traits: {
-          username: ''
+          username: '',
+          displayName: '',
+          roleType: ''
         }
       },
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '编辑',
+        create: '新增'
       },
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
@@ -201,7 +206,9 @@ export default {
       this.temp = {
         schemaId: '',
         traits: {
-          username: ''
+          username: '',
+          displayName: '',
+          roleType: ''
         }
       }
     },
