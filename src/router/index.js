@@ -67,6 +67,18 @@ export const constantRoutes = [
     }]
   },
 
+  {
+    path: '/permission-management',
+    component: Layout,
+    redirect: '/permission-management',
+    children: [{
+      path: 'permission-management',
+      name: 'PermissionManagement',
+      component: () => import('@/views/permission/index'),
+      meta: { title: '权限管理', icon: 'el-icon-key' }
+    }]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
