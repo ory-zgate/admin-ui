@@ -10,8 +10,8 @@ export function fetchList(query) {
 
 export function createPermission(data) {
   return request({
-    url: '/api/access',
-    method: 'post',
+    url: '/api/access/create',
+    method: 'put',
     data
   })
 }
@@ -24,9 +24,10 @@ export function updatePermission(data) {
   })
 }
 
-export function deletePermission(id) {
+export function deletePermission(params) {
   return request({
-    url: `/api/access/${id}`,
-    method: 'delete'
+    url: `/api/access/delete`,
+    method: 'delete',
+    params
   })
 }

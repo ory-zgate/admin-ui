@@ -62,16 +62,19 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
-    <!-- <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="temp.traits.username" />
+        <el-form-item label="namespace" prop="namespace">
+          <el-input v-model="temp.namespace" />
         </el-form-item>
-        <el-form-item label="用户昵称" prop="displayName">
-          <el-input v-model="temp.traits.displayName" />
+        <el-form-item label="object" prop="object">
+          <el-input v-model="temp.object" />
         </el-form-item>
-        <el-form-item label="角色" prop="roleType">
-          <el-input v-model="temp.traits.roleType" />
+        <el-form-item label="subject" prop="subject">
+          <el-input v-model="temp.subject" />
+        </el-form-item>
+        <el-form-item label="relation" prop="relation">
+          <el-input v-model="temp.relation" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -82,7 +85,7 @@
           确认
         </el-button>
       </div>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
@@ -124,12 +127,10 @@ export default {
       namespaceOptions: [{ label: 'identity', key: 'identity' }, { label: 'access', key: 'access' }],
       showReviewer: false,
       temp: {
-        schemaId: 'default',
-        traits: {
-          username: '',
-          displayName: '',
-          roleType: ''
-        }
+        namespace: '',
+        object: '',
+        subject: '',
+        relation: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -141,11 +142,7 @@ export default {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
         timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
         title: [{ required: true, message: 'title is required', trigger: 'blur' }],
-        traits: {
-          username: [{ required: true, message: 'title is required', trigger: 'blur' }]
-        }
-      },
-      downloadLoading: false
+      }
     }
   },
   created() {
@@ -193,12 +190,10 @@ export default {
     },
     resetTemp() {
       this.temp = {
-        schemaId: '',
-        traits: {
-          username: '',
-          displayName: '',
-          roleType: ''
-        }
+        namespace: '',
+        object: '',
+        subject: '',
+        relation: ''
       }
     },
     handleCreate() {
@@ -212,8 +207,7 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.temp.schemaId = 'default'
-          createUser(this.temp).then(() => {
+          createPermission(this.temp).then(() => {
             this.getList()
             this.dialogFormVisible = false
             this.$notify({
@@ -238,7 +232,6 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
-          tempData.schemaId = 'default'
           updateUser(tempData).then(() => {
             this.getList()
             this.dialogFormVisible = false
@@ -253,7 +246,7 @@ export default {
       })
     },
     handleDelete(row, index) {
-      deleteUser(row.id).then(() => {
+      deletePermission(row).then(() => {
         this.list.splice(index, 1)
         this.$notify({
           title: 'Success',
