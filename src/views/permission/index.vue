@@ -65,7 +65,9 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
         <el-form-item label="namespace" prop="namespace">
-          <el-input v-model="temp.namespace" />
+          <el-select v-model="temp.namespace" style="width: 140px" class="filter-item" @change="handleFilter">
+            <el-option v-for="item in namespaceOptions" :key="item.key" :label="item.label" :value="item.key"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="object" prop="object">
           <el-input v-model="temp.object" />
@@ -141,7 +143,10 @@ export default {
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
         timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }],
+        namespace: [{ required: true, message: 'namespace is required', trigger: 'blur' }],
+        object: [{ required: true, message: 'object is required', trigger: 'blur' }],
+        subject: [{ required: true, message: 'subject is required', trigger: 'blur' }],
+        relation: [{ required: true, message: 'relation is required', trigger: 'blur' }],
       }
     }
   },
